@@ -11,7 +11,8 @@ jobs:
       - run: pip install bandit codespell flake8 isort pytest pyupgrade tox
       - run: bandit -r . || true
       - run: codespell --ignore-words-list="brane,gool,ist,sherif,wil" --quiet-level=2 --skip="*.key" || true
-      - run: pip install -r requirements.txt || true
+      - run: pip install -U -r requirements/default.txt
+      - run: pip install -U -r requirements/test.txt      
       - run: tox || true
       - run: pytest . || true
       - run: pytest --doctest-modules . || true
