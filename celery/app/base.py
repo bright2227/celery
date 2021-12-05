@@ -233,6 +233,7 @@ class Celery:
                  **kwargs):
 
         self._local = threading.local()
+        self.backends = None
 
         self.clock = LamportClock()
         self.main = main
@@ -1246,11 +1247,19 @@ class Celery:
     @property
     def backend(self):
         """Current backend instance."""
-        try:
-            return self._local.backend
-        except AttributeError:
-            self._local.backend = new_backend = self._get_backend()
-            return new_backend
+        # Due to nature of gevent or some web framework(Flask) spawns disposable
+        # new threads for requests, Storing backend instances in thread local
+        # storage is possible to create too much connections.
+        # Use backect method to limit the max amount of backend instances, while
+        # each thread gets the same backend instance.
+        buckect_id = hash(self.thread_oid) % self._conf.result_backend_max_instances
+
+        if self.backend_local is None:
+            self.backend_local = [None for _ in range(self._conf.result_backend_max_instances)]
+        if self.backend_local[buckect_id] is None:
+            self.backend_local[buckect_id] = self._get_backend()
+
+        return self.backend_local[buckect_id]
 
     @property
     def conf(self):
