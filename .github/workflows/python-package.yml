@@ -5,7 +5,7 @@ name: Celery
 
 on:
   push:
-    branches: [ 'master']
+    branches: [ 'master', 'bright2227-patch']
     paths:
         - '**.py'
         - '**.txt'
