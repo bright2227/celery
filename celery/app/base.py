@@ -1254,12 +1254,12 @@ class Celery:
         # each thread gets the same backend instance.
         buckect_id = hash(self.thread_oid) % self._conf.result_backend_max_instances
 
-        if self.backend_local is None:
-            self.backend_local = [None for _ in range(self._conf.result_backend_max_instances)]
-        if self.backend_local[buckect_id] is None:
-            self.backend_local[buckect_id] = self._get_backend()
+        if self.backends is None:
+            self.backends = [None for _ in range(self._conf.result_backend_max_instances)]
+        if self.backends[buckect_id] is None:
+            self.backends[buckect_id] = self._get_backend()
 
-        return self.backend_local[buckect_id]
+        return self.backends[buckect_id]
 
     @property
     def conf(self):
