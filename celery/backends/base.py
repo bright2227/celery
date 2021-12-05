@@ -136,6 +136,7 @@ class Backend:
         self.max_sleep_between_retries_ms = conf.get('result_backend_max_sleep_between_retries_ms', 10000)
         self.base_sleep_between_retries_ms = conf.get('result_backend_base_sleep_between_retries_ms', 10)
         self.max_retries = conf.get('result_backend_max_retries', float("inf"))
+        self.max_instances = conf.get('result_backend_max_instances', 5)
 
         self._pending_results = pending_results_t({}, WeakValueDictionary())
         self._pending_messages = BufferMap(MESSAGE_BUFFER_MAX)

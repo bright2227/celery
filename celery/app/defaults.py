@@ -211,6 +211,7 @@ NAMESPACES = Namespace(
         backend_max_retries=Option(float("inf"), type='float'),
         backend_base_sleep_between_retries_ms=Option(10, type='int'),
         backend_always_retry=Option(False, type='bool'),
+        backend_max_instances=Option(16, type='int'),
     ),
     elasticsearch=Namespace(
         __old__=old_ns('celery_elasticsearch'),
