@@ -28,10 +28,11 @@ MONGODB_DATABASE = 'testing'
 MONGODB_COLLECTION = 'collection1'
 MONGODB_GROUP_COLLECTION = 'group_collection1'
 # uri with user, password, database name, replica set, DNS seedlist format
-MONGODB_SEEDLIST_URI = ('srv://'
-                      'celeryuser:celerypassword@'
-                      'dns-seedlist-host.example.com/'
-                      'celerydatabase')
+MONGODB_SEEDLIST_URI = (
+                'srv://celeryuser:celerypassword@'
+                'dns-seedlist-host.example.com/'
+                'celerydatabase'
+            )
 MONGODB_BACKEND_HOST = [
                 'mongo1.example.com:27017',
                 'mongo2.example.com:27017',
@@ -63,6 +64,7 @@ def fake_resolver_dnspython():
             return [TXT(0, 0, [b'replicaSet=rs0'])]
 
     return mock_resolver
+
 
 class test_MongoBackend:
     default_url = 'mongodb://uuuu:pwpw@hostname.dom/database'
